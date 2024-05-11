@@ -4,6 +4,7 @@ package com.example.demo.controller;
 import com.example.demo.model.SignUp;
 import com.example.demo.repositories.SignUpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ public class SignUpController {
 
     @Autowired
     private SignUpRepository signUpRepository;
-
+    @CrossOrigin(origins = "http://localhost:5173") 
     @PostMapping("/signup")
     public String signUp(@RequestBody SignUp signUpRequest) {
         // Validation: Check if all fields are provided

@@ -6,6 +6,7 @@ import com.example.demo.repositories.SignUpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ public class LoginController {
 
     @Autowired
     private SignUpRepository signUpRepository;
-
+    @CrossOrigin(origins = "http://localhost:5173") 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody SignUp loginRequest) {
         // Validation: Check if username and password are provided

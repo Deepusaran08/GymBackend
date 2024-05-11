@@ -1,6 +1,8 @@
 // SignUp.java
 package com.example.demo.model;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "SignUpDetails")
+
 public class SignUp {
 
     @Id
