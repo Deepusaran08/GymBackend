@@ -4,6 +4,8 @@ package com.example.demo.controller;
 import com.example.demo.model.SignUp;
 import com.example.demo.repositories.SignUpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,19 +18,24 @@ public class SignUpController {
     private SignUpRepository signUpRepository;
     @CrossOrigin(origins = "http://localhost:5173") 
     @PostMapping("/signup")
-    public String signUp(@RequestBody SignUp signUpRequest) {
+    public ResponseEntity<String> signUp(@RequestBody SignUp signUpRequest) {
         // Validation: Check if all fields are provided
         if (signUpRequest.getName() == null || signUpRequest.getName().isEmpty() ||
                 signUpRequest.getUsername() == null || signUpRequest.getUsername().isEmpty() ||
                 signUpRequest.getPassword() == null || signUpRequest.getPassword().isEmpty() ||
                 signUpRequest.getGymName() == null || signUpRequest.getGymName().isEmpty() ||
                 signUpRequest.getMobileNumber() == null || signUpRequest.getMobileNumber().isEmpty()) {
-            return "All fields are required!";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("All fields are required!");
+        }
+        
+        // Check if the username already exists
+        if (signUpRepository.existsByUsername(signUpRequest.getUsername())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
         }
 
         // Save the signup data into the database
         signUpRepository.save(signUpRequest);
 
-        return "Signup successful!";
+        return ResponseEntity.status(HttpStatus.OK).body("SignUp Successfully");
     }
 }
