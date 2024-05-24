@@ -8,4 +8,5 @@ public interface SignUpRepository extends JpaRepository<SignUp, Integer> {
 	SignUp findByUsername(String username);
 
 	boolean existsByUsername(String username);
+	
 }
