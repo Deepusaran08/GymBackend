@@ -8,12 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/members")
+@RequestMapping("/registration")
+
 public class RegistrationController {
 
     @Autowired
     private MemberService memberService;
-
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping
     public ResponseEntity<Member> addMember(@RequestBody Member member) {
         try {

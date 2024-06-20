@@ -1,8 +1,6 @@
 // SignUp.java
 package com.example.demo.model;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,8 +20,18 @@ public class SignUp {
     private String password;
     private String gymName;
     private String mobileNumber;
+    private String Role;
+    
 
-    // Getters and setters
+    public String getRole() {
+		return Role;
+	}
+
+	public void setGetRole(String Role) {
+		this.Role = Role;
+	}
+
+	// Getters and setters
     public Integer getId() {
         return id;
     }
