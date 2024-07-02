@@ -1,22 +1,28 @@
 // LoginController.java
 package com.example.demo.controller;
 
+//import com.becoder.entity.User;
 import com.example.demo.model.SignUp;
 import com.example.demo.repositories.SignUpRepository;
+
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-@RestController
+@CrossOrigin(origins = "http://localhost:5173") 
+@RestController()
 public class LoginController {
 
     @Autowired
     private SignUpRepository signUpRepository;
-    @CrossOrigin(origins = "http://localhost:5173") 
+    
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody SignUp loginRequest) {
         // Validation: Check if username and password are provided
@@ -35,5 +41,25 @@ public class LoginController {
 
         // If username and password match, return success message
         return ResponseEntity.ok("Login successful!");
+    }
+    
+    @GetMapping("/test")
+    public ResponseEntity<String> test()
+    {
+    	return ResponseEntity.ok("yes");
+    }
+    
+    @PostMapping("/openDashboard")
+    public ResponseEntity<String> openDashboard(@RequestBody SignUp signUp)
+    {
+        if (signUp.getUsername() == null || signUp.getUsername().isEmpty() ||
+        		signUp.getPassword() == null || signUp.getPassword().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username and password are required!");
+        }
+        SignUp existingUser = signUpRepository.findByUsername(signUp.getUsername());
+        if (existingUser == null || !existingUser.getPassword().equals(signUp.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password!");
+        }
+        return ResponseEntity.ok("Login successful hogaya!");
     }
 }

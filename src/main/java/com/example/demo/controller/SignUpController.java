@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 public class SignUpController {
 
     @Autowired
     private SignUpRepository signUpRepository;
-    @CrossOrigin(origins = "http://localhost:5173") 
+     
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody SignUp signUpRequest) {
         // Validation: Check if all fields are provided
